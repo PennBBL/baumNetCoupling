@@ -60,3 +60,7 @@ for i = 1:nsub
           num_struct_edges(i,j)= length(struct_edges);
      end
 end
+
+%% Define outputs
+reg_coupling = reg_corr;
+mean_reg_coupling = mean(reg_corr)';
