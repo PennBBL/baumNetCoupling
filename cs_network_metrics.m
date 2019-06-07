@@ -97,9 +97,9 @@ dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n
 mean_restFC = squareform(mean(rest_edgevec));
 sq_mean_restFC=squareform(mean_restFC)';
 z_sq_mean_restFC = zscore(sq_mean_restFC); %% Z-transform Pearson r values
-atanh_sq_mean_restFC = atanh(sq_mean_restFC); %% Z-transform Pearson r values
+% atanh_sq_mean_restFC = atanh(atanh_sq_mean_restFC); %% Z-transform Pearson r values
 
-[coeff,score,latent,tsquared,explained,mu] = pca(z_mean_restFC);
+[coeff,score,latent,tsquared,explained,mu] = pca(z_sq_mean_restFC);
 
 func_PC1_coeff=coeff(:,1);
 func_PC2_coeff=coeff(:,2);
