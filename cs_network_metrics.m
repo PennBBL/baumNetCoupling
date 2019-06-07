@@ -5,7 +5,8 @@ addpath('/data/jag/gbaum/matlab_scripts/BCT/2017_01_15_BCT')
 addpath('/data/jux/BBL/projects/pncBaumStructFunc/scripts/colorbrewer/cbrewer/cbrewer')
 addpath('/data/jux/BBL/projects/pncBaumStructFunc/scripts/colorbrewer/MatPlotLib2.0_colormaps')
 addpath('/data/jux/BBL/projects/pncBaumStructFunc/scripts/WSBM/WSBM_v1.2')
-addpath('/data/jux/BBL/projects/pncBaumStructFunc/scripts/coupling')
+addpath('/home/gbaum/baumNetCoupling')
+% addpath('/data/jux/BBL/projects/pncBaumStructFunc/scripts/coupling')
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Load in vectorized network data %%
@@ -97,13 +98,15 @@ dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n
 mean_restFC = squareform(mean(rest_edgevec));
 sq_mean_restFC=squareform(mean_restFC)';
 z_sq_mean_restFC = zscore(sq_mean_restFC); %% Z-transform Pearson r values
+z_mean_restFC = squareform(z_sq_mean_restFC);
 % atanh_sq_mean_restFC = atanh(atanh_sq_mean_restFC); %% Z-transform Pearson r values
 
-[coeff,score,latent,tsquared,explained,mu] = pca(z_sq_mean_restFC);
+[coeff,score,latent,tsquared,explained,mu] = pca(z_mean_restFC);
 
 func_PC1_coeff=coeff(:,1);
 func_PC2_coeff=coeff(:,2);
 
+%% Export regional loadings from PCA
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Zscore_mean_restFC_PCA_comp1_loadings.txt', func_PC1_coeff);
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Zscore_mean_restFC_PCA_comp2_loadings.txt', func_PC2_coeff);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
