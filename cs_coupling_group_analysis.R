@@ -28,7 +28,7 @@ require(dimRed)
 require(sna)
 
 
-load("/data/jux/BBL/projects/pncBaumStructFunc/replication/demographics/n727_nback_restFC_NormProbSC_coupling_workspace.Rdata")
+# load("/data/jux/BBL/projects/pncBaumStructFunc/replication/demographics/n727_nback_restFC_NormProbSC_coupling_workspace.Rdata")
 
 ###################################################
 ## Load sample construction data (demographics) ##
@@ -40,14 +40,6 @@ nsub <- dim(dti_nbackFC_rest_sample) [1]
 nreg <- 400
 nedge <- 79800
 
-# struct_edgevec <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/edgevec/n727_norm_probSC_edgevec.txt", header=FALSE)
-# schaefer400_EucDist_mat <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/edgevec/Schaefer400_MNI_2mm_distance_mat.txt", header=FALSE)
-
-
-## Deterministic analyses
-# det_subj_rm_idx <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/n686_rm_subj_index.txt",header=FALSE)
-# det_dti_nbackFC_rest_sample <- dti_nbackFC_rest_sample
-# det_dti_nbackFC_rest_sample <- det_dti_nbackFC_rest_sample[-det_subj_rm_idx$V1, ]
 
 ## Schaefer400 NodeNames
 nodeNames <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400/schaefer400NodeNames.txt", header=FALSE)
@@ -56,28 +48,18 @@ nodeNames <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400/
 mean_myelin <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/myelin_maps/output/hayashi_mean_Myelin_schaefer400.txt", header=FALSE)
 colnames(mean_myelin) <- "mean_myelin"
 
-## Allometric Scaling, Evolutionary Expansion, and PET Metabolism maps
-mean_CBF <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/n1172_AslMean_regional_schaefer400x17.txt", header=FALSE)
-colnames(mean_CBF) <- "mean_CBF"
 
+## Allometric Scaling
 cort_scaling <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_cortical_scaling.txt", header=FALSE)
 colnames(cort_scaling) <- "cort_scaling"
 
-pet_metabolism <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_cortical_scaling.txtschaefer400_regional_PET_metabolism.txt", header=FALSE)
-colnames(pet_metabolism) <- "pet_metabolism"
 
+## Margulies FC Gradient
 margulies_gradient <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400x17_mean_regional_margulies_gradient.txt", header=FALSE)
-# read.table("/Users/Graham/Documents/projects/pncBaumStructFunc/figures/regional_coupling/n819_nbackCoupling/schaefer400x17_regional_margulies_gradient.txt", header=FALSE)
 colnames(margulies_gradient) <- "margulies_gradient"
 
 rescaled_evo_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_rescaled_regional_evoExpansion.txt", header=FALSE)
 colnames(rescaled_evo_expansion) <- "rescaled_evo_expansion"
-
-evo_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_evoExpansion.txt", header=FALSE)
-colnames(evo_expansion) <- "evo_expansion"
-
-dev_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_developmentalExpansion.txt", header=FALSE)
-colnames(dev_expansion) <- "dev_expansion"
 
 restFC_pca_comp1 <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Zscore_mean_restFC_PCA_comp1_loadings.txt", header=FALSE)
 colnames(restFC_pca_comp1) <- "restFC_pca_comp1"
@@ -96,20 +78,12 @@ for(i in 1:nreg) {
 }
 
 
-# nback_reg_coupling <- read.csv("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/coupling/n727_Schaefer400_threshNormProbSC_1back-2backFC_regional_coupling_Spearman_r.txt", header=FALSE)
-# nback_reg_coupling <- as.data.frame(nback_reg_coupling)
-
 nback_reg_coupling <- read.csv("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n727_Schaefer400_thresh_norm_probSC_nbackFC_regional_coupling_Spearman_r.txt", header=FALSE)
 nback_reg_coupling <- as.data.frame(nback_reg_coupling)
 
 for(i in 1:nreg) {
   colnames(nback_reg_coupling)[i] <- paste("nback_regCoup_V", i, sep = "")
 }
-
-# detSC_reg_coupling <- read.csv("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/coupling/deterministic/n686_Schaefer400_thresh_norm_detSC_Communicability_nbackFC_regional_coupling_Spearman_r.txt", header=FALSE)
-# for(i in 1:nreg) {
-#   colnames(detSC_reg_coupling)[i] <- paste("detSC_regCoup_V", i, sep = "")
-# }
 
 ################################################
 
@@ -125,16 +99,6 @@ regional_delta_negPC <- read.csv("/data/jux/BBL/projects/pncBaumStructFunc/repli
 for(i in 1:nreg) {
   colnames(regional_delta_negPC)[i] <- paste("delta_negPC_V", i, sep = "")
 }
-
-
-################################################################
-## Within-Subject Correlation Between Nback and Rest Coupling ##
-################################################################
-# withinSubj_coupling_corr <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/coupling/n727_Schaefer400_withinSubj_corr_nbackFC-restFC_Spearman_coupling_r.txt", header=FALSE)
-# withinSubj_coupling_corr <- as.data.frame(withinSubj_coupling_corr)
-# colnames(withinSubj_coupling_corr) <- "withinSubj_coupling_corr"
-
-# hist(withinSubj_coupling_corr$withinSubj_coupling_corr, col="royalblue3")
 
 #####################################
 ## One-sample t-test for Coupling  ##
@@ -153,7 +117,7 @@ coupling_results <- cbind(regCoupling_pvals, FDRcorr_regCoupling_pvals)
 sig_FDRcorr_regCoupling_pvals <- as.data.frame(subset(coupling_results, coupling_results$FDRcorr_regCoupling_pvals < 0.05))
 dim(sig_FDRcorr_regCoupling_pvals)
 
-hist(sig_FDRcorr_regCoupling_pvals$FDRcorr_regCoupling_pvals, col="gold")
+# hist(sig_FDRcorr_regCoupling_pvals$FDRcorr_regCoupling_pvals, col="gold")
 
 ###############################################
 ## Merge regional coupling with demographics ##
@@ -441,10 +405,10 @@ write.table(FDRcorr_regCoupling_nbackFC_dprime_pvals$dprime_gam_tstats,  "/data/
 ###########################
 ## Read in Node Features ##
 ###########################
-mean_rest_coupling <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/coupling/n727_Schaefer400_thresh_norm_probSC_restFC_groupAvg_coupling_Spearman_r.txt", header=FALSE)
+mean_rest_coupling <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n727_Schaefer400_thresh_norm_probSC_restFC_groupAvg_coupling_Spearman_r.txt", header=FALSE)
 colnames(mean_rest_coupling) <- "mean_rest_coupling"
 
-mean_nback_coupling <- read.table("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/coupling/n727_Schaefer400_thresh_norm_probSC_nbackFC_groupAvg_coupling_Spearman_r.txt", header=FALSE)
+mean_nback_coupling <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n727_Schaefer400_thresh_norm_probSC_nbackFC_groupAvg_coupling_Spearman_r.txt", header=FALSE)
 colnames(mean_nback_coupling) <- "mean_nback_coupling"
 
 mean_struct_nodeStrength <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_groupAvg_struct_thresh_norm_probSC_nodeStrength.txt", header=FALSE)
@@ -499,27 +463,15 @@ require(corrplot)
 ## Create Right Hemisphere corr_df
 rh_corr_df <- as.data.frame(corr_df[201:400,])
 
-M <- cor(corr_df)
-corrplot(M, method = "number", col="black")
+# M <- cor(corr_df)
+# corrplot(M, method = "number", col="black")
 
-rh_M <- cor(rh_corr_df)
-corrplot(rh_M, method = "number", col="black")
+# rh_M <- cor(rh_corr_df)
+# corrplot(rh_M, method = "number", col="black")
 
 ## Yeo Partition
 Yeo7_part <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400/schaefer400x7CommunityAffiliation.1D", header=FALSE)
 Yeo17_part <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400/schaefer400x17CommunityAffiliation.1D", header=FALSE)
-
-vis_idx = which(Yeo7_part == 1);
-som_idx = which(Yeo7_part == 2);
-dors_idx = which(Yeo7_part == 3);
-vent_idx = which(Yeo7_part == 4);
-lim_idx = which(Yeo7_part == 5);
-fpc_idx = which(Yeo7_part == 6);
-dmn_idx = which(Yeo7_part == 7);
-
-dmn_A_idx = which(Yeo17_part == 15);
-dmn_B_idx = which(Yeo17_part == 16);
-dmn_C_idx = which(Yeo17_part == 17);
 
 corr_df <- cbind(corr_df, Yeo7_part)
 corr_df$dmn_idx <- 0
@@ -551,15 +503,25 @@ rh_corr_df <- as.data.frame(corr_df[201:400,])
 # hist(perm_ageEffect_scaling_rvals, col="royalblue") 
 
 
+
 ##########################################
 ## Figure 2: Associations with Coupling ##
 ##########################################
+require(gridExtra)
+axis_text <- element_text(color = "black", size = 14)
+
 nbackCoupling_over_myelination_plot <- ggplot(data = corr_df, aes(mean_myelin, mean_nback_coupling)) + geom_point(aes(alpha=1.0))+ geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_structPC_plot <- ggplot(data = corr_df, aes(struct_PC, mean_nback_coupling)) + geom_point(aes(alpha=1.0))+ geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_nbackposPC_plot <- ggplot(data = corr_df, aes(nback_posPC, mean_nback_coupling)) + geom_point(aes(alpha=1.0))+ geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_nbacknegPC_plot <- ggplot(data = corr_df, aes(nback_negPC, mean_nback_coupling)) + geom_point(aes(alpha=1.0))+ geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_evoExpansion_plot <- ggplot(data = rh_corr_df, aes(rescaled_evo_expansion, mean_nback_coupling)) + geom_point(aes(alpha=1.0))+ geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_gradient_plot <- ggplot(data = corr_df, aes(margulies_gradient, mean_nback_coupling)) + geom_point(aes(alpha=1.0)) + geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCoupling_over_nbackSigChange <- ggplot(data = corr_df, aes(mean_nback_activation, mean_nback_coupling)) + geom_point(aes(alpha=1.0)) + geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
 
 nbackCoupling_over_restFC_PCA_gradient_plot <- ggplot(data = corr_df, aes(restFC_pca_comp1, mean_nback_coupling)) + geom_point(aes(alpha=1.0)) + geom_smooth(method="lm",size=2, col="firebrick4", aes(y = mean_nback_coupling)) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
@@ -572,6 +534,8 @@ grid.arrange(nbackCoupling_over_structPC_plot, nbackCoupling_over_nbackposPC_plo
 ###################################################
 ## FIGURE 3B: NBACK COUPLING AGE EFFECTS BOXPLOT ##
 ###################################################
+dev.off()
+
 sig_min <- min(abs(sig_FDRcorr_regCoupling_Age_pvals$AgeEffect_Zscore))
 neg_sig_min <- -(sig_min)
 
@@ -587,20 +551,17 @@ corr_df$relevel_Yeo7 <- relevel(corr_df$Yeo7_part, ref = 7)
 test_anova <- lm(aov(data=corr_df, nback_ageEffect ~ as.factor(relevel_Yeo7)))
 ##############################################
 
-#########################################
-## 3rd-level Node Feature Scatterplots ##
-#########################################
-require(gridExtra)
-
-axis_text <- element_text(color = "black", size = 14)
-
 ##########################################################
 ## Figure 3C-E: Coupling Age effects over Node Features ##
 ##########################################################
 nbackCouplingAgeEffect_over_nbackPosPC <- ggplot(data = corr_df, aes(nback_posPC, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none') 
+
 nbackCouplingAgeEffect_over_nback_coupling <- ggplot(data = corr_df, aes(mean_nback_coupling, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCouplingAgeEffect_over_evoExpansion  <- ggplot(data = rh_corr_df, aes(rescaled_evo_expansion, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCouplingAgeEffect_over_scaling <- ggplot(data = corr_df, aes(cort_scaling, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
+
 nbackCouplingAgeEffect_over_gradient <- ggplot(data = corr_df, aes(margulies_gradient, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
 
 nbackCouplingAgeEffect_over_restFC_PCA_gradient <- ggplot(data = corr_df, aes(restFC_pca_comp1, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none') # + theme(legend.position = "none")
@@ -750,4 +711,4 @@ boot.fit
 mediation_pval <- boot.fit$pvalue[7]
 print(mediation_pval)
 
-save.image("/Users/Graham/Desktop/2018_Desktop/n727_coupling_data/local_n727_groupAnalysis_Workspace.Rdata")
+save.image("/data/jux/BBL/projects/pncBaumStructFunc/replication/group_stats/n727_coupling_groupAnalysis_workspace.Rdata")

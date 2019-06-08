@@ -15,7 +15,7 @@ require(Formula)
 t1_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/t1struct/n1601_t1QaData_20170306.csv")
 
 # Nback QA
-nback_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/nback/nbackGlmBlockDesign/n1601_NBACKQAData_20181001.csv")
+# nback_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/nback/nbackGlmBlockDesign/n1601_NBACKQAData_20181001.csv")
 # read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/nback/n1601_NbackQAData_20170427.csv")
 
 nbackConn_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/nback/nbackConnectNoRegress/n1601_NbackConnectQAData_20170718.csv")
@@ -50,7 +50,7 @@ tracker <- tracker[c("bblid","scanid")]
 final_df <- demog
 final_df <- merge(final_df, health, by=c("bblid","scanid"))
 final_df <- merge(final_df, t1_qa, by=c("bblid","scanid"))
-final_df <- merge(final_df, nback_qa, by=c("bblid","scanid"))
+# final_df <- merge(final_df, nback_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, nbackConn_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, nback_behavior, by=c("bblid","scanid"))
 final_df <- merge(final_df, idemoConn_qa, by=c("bblid","scanid"))
@@ -100,6 +100,7 @@ for(i in 1:nsub){
 ## Remove subjects with missing network data ##
 ###############################################
 bad_scanid_idx <- which(bad_struct_scanids!=0)
+length(bad_scanid_idx)
 dti_nbackFC_rest_sample <- dti_nbackFC_rest_sample[-bad_scanid_idx, ]
 dim(dti_nbackFC_rest_sample)
 

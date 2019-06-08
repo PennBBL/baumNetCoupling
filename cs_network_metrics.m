@@ -196,7 +196,7 @@ end
 mean_struct_PC=mean(struct_PC,1)';
 wholebrain_mean_struct_PC=mean(struct_PC,2);
 
-figure; hist(mean_struct_PC)
+% figure; hist(mean_struct_PC)
 
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_thresh_norm_probSC_Schaefer400_Yeo7_mean_structPC.txt', mean_struct_PC)
 % dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_thresh_norm_probSC_Schaefer400_Yeo7_wholebrain_mean_structPC.txt', wholebrain_mean_struct_PC)
@@ -237,8 +237,8 @@ wholebrain_mean_nback_negPC=mean(nback_negPC,2);
 mean_modular_nback_posPC = mean(mod_nback_mean_posPC)';
 mean_modular_nback_negPC = mean(mod_nback_mean_negPC)';
 
-figure; hist(mean_nback_posPC)
-figure; hist(mean_nback_negPC)
+% figure; hist(mean_nback_posPC)
+% figure; hist(mean_nback_negPC)
 
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_regional_nbackFC_posPC.txt', nback_posPC)
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_regional_nbackFC_negPC.txt', nback_negPC)
@@ -279,8 +279,8 @@ mean_rest_negPC = mean(rest_negPC)';
 wholebrain_mean_rest_posPC=mean(rest_posPC,2);
 wholebrain_mean_rest_negPC=mean(rest_negPC,2);
 
-figure; hist(mean_rest_posPC)
-figure; hist(mean_rest_negPC)
+% figure; hist(mean_rest_posPC)
+% figure; hist(mean_rest_negPC)
 
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_regional_restFC_posPC.txt', rest_posPC)
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_regional_restFC_negPC.txt', rest_negPC)
@@ -318,7 +318,6 @@ dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/n
 %% Export neg delta PC
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_mean_DELTA_Neg_nbackPC-restPC.txt', mean_delta_negPC)
 dlmwrite('/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Yeo7_regional_DELTA_Neg_nbackPC-restPC.txt', delta_negPC)
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% Compute Structural Modularity Quality of Yeo Partition %%%
