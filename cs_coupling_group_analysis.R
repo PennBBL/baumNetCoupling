@@ -27,9 +27,6 @@ require(gridExtra)
 require(dimRed)
 require(sna)
 
-
-# load("/data/jux/BBL/projects/pncBaumStructFunc/replication/demographics/n727_nback_restFC_NormProbSC_coupling_workspace.Rdata")
-
 ###################################################
 ## Load sample construction data (demographics) ##
 ##################################################
@@ -40,19 +37,12 @@ nsub <- dim(dti_nbackFC_rest_sample) [1]
 nreg <- 400
 nedge <- 79800
 
-
 ## Schaefer400 NodeNames
 nodeNames <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400/schaefer400NodeNames.txt", header=FALSE)
 
 ## Myelin Map
 mean_myelin <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/myelin_maps/output/hayashi_mean_Myelin_schaefer400.txt", header=FALSE)
 colnames(mean_myelin) <- "mean_myelin"
-
-
-## Allometric Scaling
-cort_scaling <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_cortical_scaling.txt", header=FALSE)
-colnames(cort_scaling) <- "cort_scaling"
-
 
 ## Margulies FC Gradient
 margulies_gradient <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400x17_mean_regional_margulies_gradient.txt", header=FALSE)
@@ -84,7 +74,6 @@ nback_reg_coupling <- as.data.frame(nback_reg_coupling)
 for(i in 1:nreg) {
   colnames(nback_reg_coupling)[i] <- paste("nback_regCoup_V", i, sep = "")
 }
-
 ################################################
 
 #############################
@@ -117,8 +106,6 @@ coupling_results <- cbind(regCoupling_pvals, FDRcorr_regCoupling_pvals)
 sig_FDRcorr_regCoupling_pvals <- as.data.frame(subset(coupling_results, coupling_results$FDRcorr_regCoupling_pvals < 0.05))
 dim(sig_FDRcorr_regCoupling_pvals)
 
-# hist(sig_FDRcorr_regCoupling_pvals$FDRcorr_regCoupling_pvals, col="gold")
-
 ###############################################
 ## Merge regional coupling with demographics ##
 ###############################################
@@ -132,21 +119,6 @@ reg_n727_df$age <- reg_n727_df$ageAtScan1 / 12
 
 ## Create geometric mean motion measure for combining Rest and Nback
 reg_n727_df$mean_nbackRest_motion <- sqrt(reg_n727_df$nbackRelMeanRMSMotion * reg_n727_df$restRelMeanRMSMotion)
-
-###################
-## DETERMINISTIC ##
-###################
-# reg_n686_df <- cbind(detSC_reg_coupling, det_dti_nbackFC_rest_sample)
-
-# ## Set categorical variables as factors
-# reg_n686_df$sex <- as.factor(reg_n686_df$sex)
-
-# ## Create non-rounded Age in years measure
-# reg_n686_df$age <- reg_n686_df$ageAtScan1 / 12
-
-# ## Create geometric mean motion measure for combining Rest and Nback
-# reg_n686_df$mean_nbackRest_motion <- sqrt(reg_n686_df$nbackRelMeanRMSMotion * reg_n686_df$restRelMeanRMSMotion)
-
 
 ###############################################
 ### Run node-wise GAM estimating Age Effect ###
@@ -176,8 +148,6 @@ regCoupling_Age_pvals$AgeEffect_Zscore <- qnorm(regCoupling_Age_pvals$regCouplin
 
 ## Set Z-score sign to positive/negative based on T-value ###
 regCoupling_Age_pvals$AgeEffect_Zscore[which(regCoupling_Age_pvals$lm_tvals < 0)] <- -(regCoupling_Age_pvals$AgeEffect_Zscore[which(regCoupling_Age_pvals$lm_tvals < 0)])
-
-regCoupling_Age_pvals <- cbind(regCoupling_Age_pvals, cort_scaling, evo_expansion, pet_metabolism)
 
 ## FDR correction
 FDRcorr_regCoupling_Age_pvals <- p.adjust(regCoupling_Age_pvals$regCoupling_Age_pvals, method="fdr")
@@ -235,8 +205,6 @@ rest_regCoupling_Age_pvals$AgeEffect_Zscore <- qnorm(rest_regCoupling_Age_pvals$
 
 ## Set Z-score sign to positive/negative based on T-value ###
 rest_regCoupling_Age_pvals$AgeEffect_Zscore[which(rest_regCoupling_Age_pvals$lm_tvals < 0)] <- -(rest_regCoupling_Age_pvals$AgeEffect_Zscore[which(rest_regCoupling_Age_pvals$lm_tvals < 0)])
-
-rest_regCoupling_Age_pvals <- cbind(rest_regCoupling_Age_pvals, cort_scaling, evo_expansion, pet_metabolism)
 
 ## FDR correction
 FDRcorr_rest_regCoupling_Age_pvals <- p.adjust(rest_regCoupling_Age_pvals$rest_regCoupling_Age_pvals, method="fdr")
@@ -303,7 +271,6 @@ sigPos_results <- subset(sig_FDRcorr_regCoupling_nbackFC_F1ExecAcc_pvals, sig_FD
 ## Write out results
 write.table(FDRcorr_regCoupling_nbackFC_F1ExecAcc_pvals$F1ExecAcc_gam_tstats, "/data/jux/BBL/projects/pncBaumStructFunc/replication/group_stats/n727_Schaefer400_threshNormProbSC_nbackFC_regCoupling_gam_F1Exec_tstat.txt", col.names = FALSE, row.names=FALSE)
 
-#corr_df$F1ExecAcc_tstat <- FDRcorr_regCoupling_nbackFC_F1ExecAcc_pvals$F1ExecAcc_gam_tstats
 
 ###################################################################
 ## F1_Exec_Comp_Res_Accuracy with RestFC Regional Coupling (GAM) ##
@@ -343,7 +310,6 @@ sigPos_results <- subset(sig_FDRcorr_regCoupling_restFC_F1ExecAcc_pvals, sig_FDR
 ## Write out results
 write.table(FDRcorr_regCoupling_restFC_F1ExecAcc_pvals$F1ExecAcc_gam_tstats, "/data/jux/BBL/projects/pncBaumStructFunc/replication/group_stats/n727_Schaefer400_threshNormProbSC_restFC_regCoupling_gam_F1Exec_tstat.txt", col.names = FALSE, row.names=FALSE)
 
-
 ###########################################################
 ## Nback Dprime Association with Regional Coupling (GAM) ##
 ###########################################################
@@ -379,28 +345,6 @@ min(abs(sig_FDRcorr_regCoupling_nbackFC_dprime_pvals$dprime_gam_tstats))
 
 ## Write out results
 write.table(FDRcorr_regCoupling_nbackFC_dprime_pvals$dprime_gam_tstats,  "/data/jux/BBL/projects/pncBaumStructFunc/replication/group_stats/n727_Schaefer400_threshNormProbSC_nbackFC_regCoupling_nback_AllDprime_tstat.txt", col.names = FALSE, row.names=FALSE)
-
-
-####################################
-## Read in Within-Module Coupling ##
-####################################
-# nback_withinMod_coupling <- read.csv("/data/jux/BBL/projects/pncBaumStructFunc/network_measures/Schaefer400/nback_restFC_coupling/node_features/n727_Schaefer400_Yeo7_thresh_norm_probSC_nbackFC_withinModule_coupling.txt", header=FALSE)
-# colnames(nback_withinMod_coupling) <- c("VIS_nback_coupling", "SOM_nback_coupling", "DORS_nback_coupling", "VENT_nback_coupling", "LIM_nback_coupling", "FPC_nback_coupling", "DMN_nback_coupling")
-
-# rest_withinMod_coupling <- read.csv("/data/jux/BBL/projects/pncBaumStructFunc/network_measures/Schaefer400/nback_restFC_coupling/node_features/n727_Schaefer400_Yeo7_thresh_norm_probSC_restFC_withinModule_coupling.txt", header=FALSE)
-# colnames(rest_withinMod_coupling) <- c("VIS_rest_coupling", "SOM_rest_coupling", "DORS_rest_coupling", "VENT_rest_coupling", "LIM_rest_coupling", "FPC_rest_coupling", "DMN_rest_coupling")
-
-# # Merge with df 
-# reg_n727_df <- cbind(reg_n727_df, nback_withinMod_coupling, rest_withinMod_coupling)
-# cog_df <- cbind(cog_df, rest_withinMod_coupling, nback_withinMod_coupling)
-
-# ## Test gam
-# FPC_nbackCoupling_Age_gam <- gam(FPC_nback_coupling ~ s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
-# DMN_nbackCoupling_Age_gam <- gam(DMN_nback_coupling ~ s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
-# FPC_nbackCoupling_F1Exec_gam <- gam(F1_Exec_Comp_Res_Accuracy ~ FPC_nback_coupling + s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
-# DMN_nbackCoupling_F1Exec_gam <- gam(F1_Exec_Comp_Res_Accuracy ~ DMN_nback_coupling + s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
-# DMN_nbackCoupling_F1Exec_gam <- gam(DMN_nback_coupling ~ F1_Exec_Comp_Res_Accuracy + s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
-# DMN_nbackCoupling_dprime_gam <- gam(DMN_nback_coupling ~ nbackBehTwobackDprime + s(age, k=4) + dti64MeanRelRMS + nbackRelMeanRMSMotion + sex, data= cog_df, REML=TRUE)
 
 ###########################
 ## Read in Node Features ##
@@ -445,15 +389,9 @@ mean_nback_activation <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/ne
 colnames(mean_nback_activation) <- "mean_nback_activation"
 
 
-corr_df <- cbind(FDRcorr_regCoupling_Age_pvals$AgeEffect_Zscore, FDRcorr_rest_regCoupling_Age_pvals$AgeEffect_Zscore, mean_rest_coupling, mean_nback_coupling, struct_PC, nback_posPC, nback_negPC, rest_posPC, rest_negPC, cort_scaling, rescaled_evo_expansion, margulies_gradient, Delta_posPC, Delta_negPC, mean_nback_activation, restFC_pca_comp1, restFC_pca_comp2)
+corr_df <- cbind(FDRcorr_regCoupling_Age_pvals$AgeEffect_Zscore, FDRcorr_rest_regCoupling_Age_pvals$AgeEffect_Zscore, mean_rest_coupling, mean_nback_coupling, struct_PC, nback_posPC, nback_negPC, rest_posPC, rest_negPC, rescaled_evo_expansion, margulies_gradient, Delta_posPC, Delta_negPC, mean_nback_activation, restFC_pca_comp1, restFC_pca_comp2)
 colnames(corr_df)[1] <- "nback_ageEffect"
 colnames(corr_df)[2] <- "rest_ageEffect"
-
-# corr_df <- cbind(corr_df, FDRcorr_regCoupling_nbackFC_F1ExecAcc_pvals$F1ExecAcc_gam_tstats)
-# colnames(corr_df)[20] <- "F1Exec_tstat"
-
-# corr_df <- cbind(corr_df, restFC_pca_comp1, restFC_pca_comp2)
-# corr_df <- cbind(corr_df, mean_WM_nback_coupling)
 
 ####################################################
 ## Create correlation matrix of regional measures ##
@@ -501,7 +439,6 @@ rh_corr_df <- as.data.frame(corr_df[201:400,])
 # perm_ageEffect_nbackPosPC_pval <- (sum(abs(perm_ageEffect_nbackPosPC_rvals) > abs(orig_r))) / nperm
 
 # hist(perm_ageEffect_scaling_rvals, col="royalblue") 
-
 
 
 ##########################################
@@ -559,8 +496,6 @@ nbackCouplingAgeEffect_over_nbackPosPC <- ggplot(data = corr_df, aes(nback_posPC
 nbackCouplingAgeEffect_over_nback_coupling <- ggplot(data = corr_df, aes(mean_nback_coupling, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
 
 nbackCouplingAgeEffect_over_evoExpansion  <- ggplot(data = rh_corr_df, aes(rescaled_evo_expansion, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
-
-nbackCouplingAgeEffect_over_scaling <- ggplot(data = corr_df, aes(cort_scaling, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
 
 nbackCouplingAgeEffect_over_gradient <- ggplot(data = corr_df, aes(margulies_gradient, nback_ageEffect)) + geom_point(aes(alpha=abs(nback_ageEffect), col=factor(dmn_idx)))  + scale_colour_manual(values = c("lightskyblue3", "firebrick3")) + geom_smooth(method="lm",size=2, col="gray20", aes(y = nback_ageEffect)) + geom_hline(yintercept= sig_min, linetype="dashed", color = "gray36", alpha=0.6) + geom_hline(yintercept= neg_sig_min, linetype="dashed", color = "gray36", alpha=0.6) + theme(axis.text.x = axis_text, axis.text.y = axis_text ) + theme(panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.background = element_blank()) + theme(axis.line = element_line(colour = 'black', size = 1.5), axis.ticks.length = unit(.25, "cm")) + scale_alpha(guide = 'none')
 
@@ -672,7 +607,6 @@ grid.arrange(v348_age_plot, v348_F1ExecAcc_plot, nrow = 1)
 #################################
 ## COGNTIVE MEDIATION ANALYSIS ##
 #################################
-
 Age_lm <- lm(age ~ sex + dti64MeanRelRMS + nbackRelMeanRMSMotion, data=cog_df)
 Age_resid <- resid(Age_lm)
 

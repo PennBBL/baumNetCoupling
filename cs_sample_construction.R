@@ -22,9 +22,6 @@ nbackConn_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimagin
 
 nback_behavior <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/nback/n1601_nbackBehavior_from_20160207_dataRelease_20161027.csv")
 
-# Emotion Identification task
-idemoConn_qa <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/neuroimaging/idemo/n1601_IdemoConnectQAData_20170718.csv")
-
 # LTN Status
 health <- read.csv("/data/joy/BBL/studies/pnc/n1601_dataFreeze/health/n1601_health_20161214.csv")
 
@@ -50,16 +47,15 @@ tracker <- tracker[c("bblid","scanid")]
 final_df <- demog
 final_df <- merge(final_df, health, by=c("bblid","scanid"))
 final_df <- merge(final_df, t1_qa, by=c("bblid","scanid"))
-# final_df <- merge(final_df, nback_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, nbackConn_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, nback_behavior, by=c("bblid","scanid"))
-final_df <- merge(final_df, idemoConn_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, rest_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, dti_qa, by=c("bblid","scanid"))
 final_df <- merge(final_df, protVal, by=c("bblid","scanid"))
 
-# dti_nbackFC_sample <- subset(final_df, ltnExcludev2 == 0 & t1Exclude == 0 & nbackFcExclude == 0 & dti64Exclude == 0 & dti64ProtocolValidationStatusExclude == 0 & b0ProtocolValidationStatus == 1)
-
+##############################
+## Apply subject exclusions ##
+##############################
 dti_nbackFC_rest_sample <- subset(final_df, ltnExcludev2 == 0 & t1Exclude == 0 & nbackFcExclude == 0 & restExclude == 0 & dti64Exclude == 0 & dti64ProtocolValidationStatusExclude == 0 & b0ProtocolValidationStatus == 1)
 
 ################################

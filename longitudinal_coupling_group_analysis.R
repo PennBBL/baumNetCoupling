@@ -42,42 +42,23 @@ Yeo17_part <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400
 ##################################
 ## Structural and Functional PC ## 
 ##################################
-
 mean_structural_PC <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/longitudinal/n294_Schaefer400_threshNormProbSC_nbackFC_Yeo7_regional_structPC.txt", header=FALSE)
 colnames(mean_structural_PC) <- "mean_structural_PC"
 
 mean_nback_posPC <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/longitudinal/n294_Schaefer400_Yeo7_groupAvg_nbackFC_posPC.txt", header=FALSE)
 colnames(mean_nback_posPC) <- "mean_nback_posPC"
 
-#########################################################################
-## Allometric Scaling, Evolutionary Expansion, and PET Metabolism maps ##
-#########################################################################
-## Myelin Map
+########################
+## Read in Brain maps ##
+########################
 mean_myelin <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/myelin_maps/output/hayashi_mean_Myelin_schaefer400.txt", header=FALSE)
 colnames(mean_myelin) <- "mean_myelin"
 
-## Allometric Scaling, Evolutionary Expansion, and PET Metabolism maps
-mean_CBF <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/n1172_AslMean_regional_schaefer400x17.txt", header=FALSE)
-colnames(mean_CBF) <- "mean_CBF"
-
-cort_scaling <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_cortical_scaling.txt", header=FALSE)
-colnames(cort_scaling) <- "cort_scaling"
-
-pet_metabolism <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_cortical_scaling.txtschaefer400_regional_PET_metabolism.txt", header=FALSE)
-colnames(pet_metabolism) <- "pet_metabolism"
-
 margulies_gradient <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400x17_mean_regional_margulies_gradient.txt", header=FALSE)
-# read.table("/Users/Graham/Documents/projects/pncBaumStructFunc/figures/regional_coupling/n819_nbackCoupling/schaefer400x17_regional_margulies_gradient.txt", header=FALSE)
 colnames(margulies_gradient) <- "margulies_gradient"
 
 rescaled_evo_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_rescaled_regional_evoExpansion.txt", header=FALSE)
 colnames(rescaled_evo_expansion) <- "rescaled_evo_expansion"
-
-evo_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_evoExpansion.txt", header=FALSE)
-colnames(evo_expansion) <- "evo_expansion"
-
-dev_expansion <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/cortical_scaling/schaefer400_regional_developmentalExpansion.txt", header=FALSE)
-colnames(dev_expansion) <- "dev_expansion"
 
 restFC_pca_comp1 <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/node_features/n727_Schaefer400_Zscore_mean_restFC_PCA_comp1_loadings.txt", header=FALSE)
 colnames(restFC_pca_comp1) <- "restFC_pca_comp1"
