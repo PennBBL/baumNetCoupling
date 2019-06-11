@@ -69,15 +69,6 @@ colnames(restFC_pca_comp2) <- "restFC_pca_comp2"
 mean_nback_activation <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/network_measures/Schaefer400/nback_restFC_coupling/nback_activation/Schaefer400PNC_mean_n727_2back-0back_sigchange_regional_values.txt", header=FALSE)
 colnames(mean_nback_activation) <- "mean_nback_activation"
 
-##########################################
-## Define Transmodal and Unimodal Index ##
-##########################################
-transmodal_index <- which(margulies_gradient$margulies_gradient > quantile(margulies_gradient$margulies_gradient, 0.9))
-unimodal_index <- which(margulies_gradient$margulies_gradient < quantile(margulies_gradient$margulies_gradient, 0.1))
-
-struct_hub_index <- which(mean_structural_PC$mean_structural_PC > quantile(mean_structural_PC$mean_structural_PC, 0.9))
-func_hub_index <- which(mean_nback_posPC$mean_nback_posPC > quantile(mean_nback_posPC$mean_nback_posPC, 0.9))
-
 #################################################
 ## Read in Network Metrics generated in Matlab ## 
 #################################################
