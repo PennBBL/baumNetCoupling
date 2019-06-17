@@ -159,7 +159,7 @@ for(i in 1:400){
 	n <- n + 1
 }
 
-hist(coupling_results$age_tstat, col="royalblue3")
+# hist(coupling_results$age_tstat, col="royalblue3")
 
 ## FDR Correction
 FDRcorr_age_pval <- as.data.frame(p.adjust(coupling_results$age_pval, method="fdr"))
@@ -253,7 +253,7 @@ mean_delta_coupling <- as.data.frame(lapply(delta_regCoup[,1:400], mean))
 mean_delta_coupling <- t(mean_delta_coupling)
 colnames(mean_delta_coupling) <- "mean_delta_coupling"
 
-hist(mean_delta_coupling[,1])
+# hist(mean_delta_coupling[,1])
 
 sd_delta_coupling <- as.data.frame(lapply(delta_regCoup[,1:400], sd))
 sd_delta_coupling <- t(sd_delta_coupling)
@@ -530,7 +530,7 @@ for(i in 1:400){
 }
 
 ## Look at distribution of effects
-hist(as.numeric(deltaCoupling_results$tstats), col="royalblue3")
+# hist(as.numeric(deltaCoupling_results$tstats), col="royalblue3")
 
 ## FDR Correction
 FDRcorr_coupling_pval <- as.data.frame(p.adjust(deltaCoupling_results$pvals, method="fdr"))
