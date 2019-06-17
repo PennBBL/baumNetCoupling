@@ -42,7 +42,7 @@ Yeo17_part <- read.table("/data/joy/BBL/applications/xcpEngine/atlas/schaefer400
 ##################################
 ## Structural and Functional PC ## 
 ##################################
-mean_structural_PC <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/longitudinal/n294_Schaefer400_threshNormProbSC_nbackFC_Yeo7_regional_structPC.txt", header=FALSE)
+mean_structural_PC <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/longitudinal/n294_Schaefer400_threshNormProbSC_nbackFC_Yeo7_groupAvg_structPC.txt", header=FALSE)
 colnames(mean_structural_PC) <- "mean_structural_PC"
 
 mean_nback_posPC <- read.table("/data/jux/BBL/projects/pncBaumStructFunc/replication/network_metrics/longitudinal/n294_Schaefer400_Yeo7_groupAvg_nbackFC_posPC.txt", header=FALSE)
