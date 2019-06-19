@@ -63,4 +63,6 @@ end
 
 %% Define outputs
 reg_coupling = reg_corr;
-mean_reg_coupling = mean(reg_corr)';
+isnan_idx=find(isnan(reg_coupling));
+reg_coupling(isnan_idx)=0;
+mean_reg_coupling = mean(reg_coupling)';
